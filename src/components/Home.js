@@ -11,7 +11,7 @@ class Home extends Component {
     render() {
         return (
             <div>
-                <h1>Hello React {this.state.title}</h1>
+                <h1>Hello React {this.state.title} ahihi</h1>
             </div>
         )
     }
