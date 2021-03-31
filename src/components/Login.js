@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {Redirect, Link} from 'react-router-dom'
+import {Redirect, Link, useHistory} from 'react-router-dom'
 import axios from 'axios'
 function Login() {
     const [username,setUsername] = useState('');
@@ -11,6 +11,7 @@ function Login() {
     const [isLogin,setIsLogin] = useState(false);
     const [checkSubmit, setCheckSubmit] = useState(false);
     const URL_Login = 'http://localhost:8081/login'
+    const history = useHistory();
 
     useEffect(()=> {
         let user = {
@@ -76,9 +77,8 @@ function Login() {
         e.preventDefault();
         setCheckSubmit(!checkSubmit);
         if(checkLogin === 'Valid'){
-            console.log('check valid and set islogin = true')
-            setIsLogin(true);
             localStorage.setItem('token','token item');
+            history.push("/mainpage/polls")
         }
          if(checkLogin === 'User not found') {
             setErrMessage(checkLogin);
@@ -89,9 +89,10 @@ function Login() {
             setIsLogin(false);
         }
     }
-    if(isLogin)
-    {
-        return <Redirect to="/mainpage"/>
+
+    const token = localStorage.getItem("token");
+    if(token != null){
+        return <Redirect to="/mainpage/polls"/>
     }
 
     return (

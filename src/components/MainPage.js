@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {Link, Redirect, BrowserRouter, Switch, Route} from 'react-router-dom'
 import CreatePoll from './CreatePoll';
-import Login from './LoginPage';
 import Polls from './Polls';
 
 function MainPage() {   

@@ -23,7 +23,7 @@ function CreatePoll() {
     }
 
     const checkValidation =  () => {
-        if(option === '' && question1 ==='' && question2==='') {
+        if(option === '' || question1 ==='' || question2==='') {
             return true;
         }
         return false;

@@ -3,8 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import './index.scss'
 import { Component } from 'react';
 import Register from './components/RegisterPage';
-import Login from './components/Login';
-import LoginPage from './components/LoginPage';
+import Login from './components/Login'; 
 import MainPage from './components/MainPage';
 import NotFound from './components/NotFound';
 import Polls from './components/Polls';

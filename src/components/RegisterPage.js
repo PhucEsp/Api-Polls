@@ -154,6 +154,11 @@ function Register() {
     if(successful != ''){
         return <Redirect to="/" ></Redirect>
     }
+    
+    const token = localStorage.getItem("token");
+    if(token != null){
+        return <Redirect to="/mainpage/polls"/>
+    }
 
     return(
         <div className="container"> 
