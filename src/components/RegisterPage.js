@@ -3,6 +3,7 @@ import React, {useState, useRef} from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import GetLogin from '../GetData/GetLogin';
 const URL_Users = 'http://localhost:8081/users'
+
 function Register() {
     const [name, setName] = useState('');
     const [username, setUserName] = useState('');
@@ -31,7 +32,6 @@ function Register() {
     }
 
     function SignUp(e){
-
         e.preventDefault()
         let IsExist = UserExist();
         if(IsExist === true){
@@ -43,7 +43,6 @@ function Register() {
                     axios.post(URL_Users,user)   
                     .then(res => {
                         setSuccessful("Successful !");
-                        console.log("this is res data ----",res.data);
                     })
                     .catch(err => {
                         setErrors(true);
@@ -92,7 +91,7 @@ function Register() {
         // console.log("-------------")
     }
 
-    function ValidationConfirmPass(e) {
+    function ValidationConfirmPass() {
         let check = false;
         if(name != password) {
             setErrName("not Matching");
@@ -152,6 +151,9 @@ function Register() {
         return check;
     }
 
+    if(successful != ''){
+        return <Redirect to="/" ></Redirect>
+    }
 
     return(
         <div className="container"> 

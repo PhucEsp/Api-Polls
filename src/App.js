@@ -1,11 +1,14 @@
-import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter,Link, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import './index.scss'
-import Login from './components/LoginPage';
-import Register from './components/RegisterPage';
-import MainPage from './components/MainPage';
 import { Component } from 'react';
+import Register from './components/RegisterPage';
+import Login from './components/Login';
+import LoginPage from './components/LoginPage';
+import MainPage from './components/MainPage';
+import NotFound from './components/NotFound';
+import Polls from './components/Polls';
+
 
 
 class App extends Component {
@@ -13,23 +16,39 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/mainpage" component={MainPage} />
-          <Route exact path="/" component={Login} />
+          <Route exact path="/register">
+             <Register></Register>
+           </Route>
+          <Route exact path="/mainpage">
+              <MainPage ></MainPage>
+          </Route>
+          {/* <Route exact path="/polls" component={Polls}></Route>
+          <Route  exact path="/createPoll" component={CreatePoll}></Route> */}
+          <Route exact path="/login" >
+            <Login></Login>
+          </Route>
+          <Route exact path="/" component={Login} > 
+            <Redirect to='/login'/>
+          </Route>
+          <Route exact path="/mainpage/polls">
+              <MainPage>
+                <Redirect to="/mainpage/polls" ></Redirect>
+              </MainPage>
+          </Route>
+
+          <Route exact path="/mainpage/createPoll">
+              <MainPage>
+                <Redirect to="/mainpage/createPoll" ></Redirect>
+              </MainPage>
+          </Route>
+
+          <Route exact path="*" component={NotFound} > 
+          </Route>
         </Switch>
       </BrowserRouter>
     //  <MyComponent></MyComponent>
-    
       );
   }
-}
-
-const A = () => {
-  return(
-    <div>
-      <h1>This is main page</h1>
-    </div>
-  )
 }
 
 export default App;

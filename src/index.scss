@@ -64,6 +64,14 @@ a {
         bottom: -28px;
         left: 2px;
     }
+    .login-error {
+        position: relative;
+        font-size: 18px;
+        font-weight: 400;
+        color: white;
+        top: 20px;
+        left: 72px;
+    }
     
 }
 
@@ -158,10 +166,29 @@ a {
         display: flex;
         justify-content: center;
         align-items: center;
+        
+        .no-poll {
+            margin-top: 40px;
+            animation-name: noPolls-anima;
+            animation-fill-mode: forwards;
+            animation-duration: 3s;
+        }
+
+        @keyframes noPolls-anima {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
         h1 {
             text-align: center;
             margin-bottom: 40px;
             color: #4a4a4a;
+            animation-name: noPolls-anima;
+            animation-fill-mode: forwards;
+            animation-duration: 1s;
         }
         .items {
             width: 100%;
@@ -211,6 +238,12 @@ a {
                             justify-content: flex-start;
                             align-items: center; 
                             background-color: #fafafa;
+                            transition: .3s all;
+                            &:hover {
+                                cursor: pointer;
+                                background-color: #ece9e9;
+                                transition: .3s all;
+                            }
                             p {
                                 margin: 0;
                             }
@@ -230,7 +263,7 @@ a {
                         }
                         .second-option {
                             &::after {
-                                background-color: blue;
+                                background-color: #0d6efd;
                             }
                         }
                     }
@@ -239,4 +272,64 @@ a {
         }
         
     }
+
+    .Create-poll {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+        .container-mainpage {
+            width: 550px;
+            h1 {
+                text-align: center;
+                position: relative;
+                top: -50px;
+                font-size: 60px;
+                color: #777;
+            }
+            .form-create {
+                // display: flex;
+                // justify-content: center;
+                form {
+                    .option{
+                        label {
+                            color: #333;
+                            font-weight: bold;
+                        }
+                        .control-input {
+                            margin: 10px 0px;
+                            input {
+                                width: 100%;
+                                padding: 10px 15px;
+                                border: 1px solid #777;
+                                border-radius: 5px;
+                                outline: none;
+                                font-size: 16px;
+                                
+                            }
+                        }
+                    }
+                    .control-button {
+                        display: flex;
+                        justify-content: center;
+                        margin-top: 38px;
+                        
+                        button {
+                            background-color: $blue-color;
+                            color: white;
+                            border: 1px solid;
+                            border-radius: 5px;
+                            padding: 8px 18px;
+                            font-size: 18px;
+                            font-weight: 500;
+                            transition: .3s all;
+                            &:hover {
+                                background-color: rgb(40, 97, 255);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }   
 }

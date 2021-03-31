@@ -1,10 +1,11 @@
 import React, {Component} from 'react'
 import {Redirect, Link} from 'react-router-dom'
 import axios from 'axios'
+
 const URL_Users = 'http://localhost:8081/users'
 const URL_Login = 'http://localhost:8081/login'
 
-class Login extends Component {
+class LoginPage extends Component {
     constructor(props){
         super(props);
 
@@ -82,7 +83,14 @@ class Login extends Component {
         return check;
     }
 
-    componentDidUpdate(){
+    componentDidUpdate(prevProps, prevState){
+        // // console.log(prevState.loggedIn, ' --- prevState')
+        // // console.log(this.state.loggedIn, ' --- this state')
+        console.log('---prevState checklogin : ' ,prevState.checkLogin);
+        console.log('---prevState loggedin : ' ,prevState.loggedIn );
+    }
+
+     componentWillUpdate(nextProps, nextState) {
         let user = {
             username: this.state.username,
             password: this.state.password,
@@ -95,7 +103,7 @@ class Login extends Component {
                 })
             })
             .catch(err => {
-                this.setState({
+                this.setState( {
                     checkLogin: err.message,
                 })
             })
@@ -104,10 +112,7 @@ class Login extends Component {
                 checkLogin: error.message,
             })
         }
-    }
-
-    
-
+   }
     onChange =  (e) =>  {
         e.preventDefault();
         this.setState({
@@ -120,28 +125,31 @@ class Login extends Component {
         // dang nhap thanh cong
         if(this.state.checkLogin === 'Valid')
         {
-            this.setState({
+            this.setState(prevState => ({
                 loggedIn: true,
-            })
+            }))
             localStorage.setItem('token','token item');
         }
         // User not found
         if(this.state.checkLogin === 'User not found'){
-            this.setState({
+            this.setState(prevState => ({
                 loggedIn: false,
                 errMessage: "User not found",
-            })
+            }))
         }   
         // Wrong Password
         if(this.state.checkLogin === 'Wrong Password') {
-            this.setState({
-                loggedIn: false,
-                errMessage: "Wrong Password",
-            })
-            console.log(this.state.checkLogin, '---check login')
-
-            console.log(this.state.password , '-- password submit')
+            this.setState(prevState => (
+                {
+                    loggedIn: false,
+                    errMessage: "Wrong Password",
+                }
+            ))
         } 
+
+        // console.log(this.state.loggedIn , '-----')
+        // console.log(this.state.checkLogin , '-----')
+
     }   
 
     render() {
@@ -176,4 +184,4 @@ class Login extends Component {
     }
 }
 
-export default Login;
+export default LoginPage;

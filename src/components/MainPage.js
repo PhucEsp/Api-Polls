@@ -4,21 +4,9 @@ import CreatePoll from './CreatePoll';
 import Login from './LoginPage';
 import Polls from './Polls';
 
-function MainPage() {
-    const [loggedIn, setLoggedIn] = useState(true);
-    console.log(loggedIn);
+function MainPage() {   
     const token = localStorage.getItem("token");
-    if(token === null)
-    {
-        setLoggedIn(false);
-    }
-
-    const nothing = () => {
-
-    }
-
-
-    if(!loggedIn){
+    if(token === null){
         return <Redirect to="/"/>
     }
     return (
@@ -29,21 +17,25 @@ function MainPage() {
                         <h3 className="navbar-title">Captain</h3>
                         <div className="navbar-end">
                             <div className="polls">
-                                <Link to="polls">Polls</Link>
+                                <Link to="/mainpage/polls">Polls</Link>
                             </div>
-                            <div className="create-poll" onClick={nothing}>
-                                <Link to="createPoll">Create a Poll</Link>
+                            <div className="create-poll">
+                                <Link to="/mainpage/createPoll">Create a Poll</Link>
                             </div>
                             <div onClick={ () => {localStorage.removeItem("token")}}>
-                                {/* <Link to="/" > Logout </Link>  */}
+                                {/* <Link to="/" > Logout </Link>    */}
                                 <a href="/" >Logout</a>
                             </div>
                         </div>
                     </div>
                 </div>
                 <Switch>
-                    <Route exact path="/polls" component={Polls}></Route>
-                    <Route  exact path="/createPoll" component={CreatePoll}></Route>
+                    <Route exact path="/mainpage/polls" >
+                        <Polls ></Polls>
+                    </Route>
+                    <Route  exact path="/mainpage/createPoll" >
+                        <CreatePoll ></CreatePoll>
+                    </Route>
                 </Switch>
                 
             </div>
