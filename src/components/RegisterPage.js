@@ -17,8 +17,7 @@ function Register() {
 
     //list users
     const {data, messageErr} = GetLogin();
-    console.log(data);   
-    // console.log(data[0].id);   
+      
 
     function UserExist() {
         setSuccessful("");

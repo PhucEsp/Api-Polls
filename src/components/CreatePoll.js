@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import {useHistory} from 'react-router-dom'
+import { addNewPoll } from '../actions/pollAction';
 import PollsListApi from '../api/PollsListApi';
 import Polls from './Polls'
 
-function CreatePoll() {
+function CreatePoll({actAddNewPoll}) {
     const [option, setOption] = useState('');
     const [question1, setQuestion1] = useState('');
     const [question2, setQuestion2] = useState('');
@@ -12,23 +14,23 @@ function CreatePoll() {
     const [checkSuccess, setCheckSuccess] = useState(false);
     const history = useHistory();
 
-    const addNewPoll = async (newpoll) => {
-        try {
-            await PollsListApi.add(newpoll);
-            setCheckSuccess(true);
-        } catch (error) {
-            console.log('failed to add new poll ' , errors.message);
-            setErrors(error);
-        }
-    }
+    // const addNewPoll = (newpoll) => {
+    //     // try {
+    //     //     await PollsListApi.add(newpoll);
+    //     //     setCheckSuccess(true);
+    //     // } catch (error) {
+    //     //     console.log('failed to add new poll ' , errors.message);
+    //     //     setErrors(error);
+    //     // }
+    //     addNewPoll(newpoll);
+    //     setCheckSuccess(true);
+    // }
 
     const checkValidation =  () => {
         if(option === '' || question1 ==='' || question2==='') {
             return true;
         }
         return false;
-        
-        
     }
 
     const submitForm = (e) => {
@@ -43,7 +45,7 @@ function CreatePoll() {
         }
         console.log(checkValidation());
         if(!checkValidation()) {
-            addNewPoll(newpoll);
+            actAddNewPoll(newpoll);
             history.push('/mainpage/polls');
         }
         else {
@@ -91,4 +93,21 @@ function CreatePoll() {
     
 }
 
-export default CreatePoll;
+const mapStateToProps = state => {
+    return {
+        PollData: state.polls,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        actAddNewPoll: (poll) => {
+            dispatch(addNewPoll(poll))
+        }
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(CreatePoll);

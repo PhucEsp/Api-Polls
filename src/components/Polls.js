@@ -2,10 +2,12 @@ import React from 'react'
 import GetListPolls from '../GetData/GetListPolls';
 import { useState, useEffect } from "react";
 import PollsListApi from '../api/PollsListApi';
+import { fetchPolls, deletePoll, addNewPoll } from '../actions/pollAction';
+import { connect } from 'react-redux';
 
-function Polls() {
+function Polls({pollsData, fetchPolls, actDeletePoll}) {
    
-    const [data,setData] = useState([])
+    // const [data,setData] = useState([])
     const [errors,setErrors] = useState(null);
     const [flag, setFlag] = useState(false);
     const [styleQuestion1, setStyleQuestion1] = useState([]);
@@ -15,20 +17,12 @@ function Polls() {
     
 
     useEffect( () => {
-        setTimeout(() => {
-            const fetchPollList = async () => {
-                try {
-                    const response = await PollsListApi.getAll();
-                    setData(response);
-                    setIsPendding(true);
-                } catch (error) {
-                    console.log('failed to fetch polls list')
-                    setErrors(error.message);
-                }
-            }
-            fetchPollList();
-        },)
-    },[flag])
+        setTimeout (() => {
+            fetchPolls()
+        })
+    },[])
+
+    const data = [...pollsData.data];
 
     const updateQuestion1 = (poll) => {
         setTimeout(() => {
@@ -50,14 +44,20 @@ function Polls() {
         }, 400);
     }
 
-    const DeletePoll = (poll) => {
-        let id = poll.id;   
-        try {
-            PollsListApi.dedete(id);
-            setFlag(!flag);
-        } catch (error) {
-            console.log(error.message);
-        }
+    // const DeletePoll = (poll) => {
+    //     let id = poll.id;   
+    //     try {
+    //         PollsListApi.dedete(id);
+    //         setFlag(!flag);
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+    // }
+
+    const DeleteAPoll = (id) => {
+        // deletePoll(id),
+        actDeletePoll(id);
+        setFlag(!flag);      
     }
 
     if(data.length == 0) {
@@ -81,7 +81,7 @@ function Polls() {
                                 <div className="card" key={poll.id}>
                                     <div className="card-header" >
                                         <p>{poll.options}</p> 
-                                        <a onClick={() => DeletePoll(poll)}>
+                                        <a onClick={() => DeleteAPoll(poll.id)}>
                                             <i class="fas fa-backspace"></i>
                                         </a>
                                     </div>
@@ -110,4 +110,24 @@ function Polls() {
         )
 }
 
-export default Polls;
+const mapStateToProps = state => {
+    return {
+      pollsData: state.polls
+    }
+  }
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+      fetchPolls: () =>{
+        dispatch(fetchPolls())
+      },
+      actDeletePoll: (id) =>  {
+        dispatch(deletePoll(id))
+      },
+    }
+  }
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+) (Polls);

@@ -31,6 +31,24 @@ function Login() {
         }
     },);
 
+    // const Login = (username, password) => {
+    //     let user = {
+    //         username: username,
+    //         password: password,
+    //     }
+    //     try {
+    //         axios.post(URL_Login,user)   
+    //         .then(res => {
+    //             setCheckLogin(res.data)
+    //         })
+    //         .catch(err => {
+    //         setCheckLogin(err.message)
+    //         })
+    //     } catch (error) {
+    //         setCheckLogin(error.message)
+    //     }
+    // }
+
     function ValidationUsername(e) {
         e.preventDefault();
         let txt = /[ `!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/;
@@ -75,6 +93,7 @@ function Login() {
     }
     function submitForm (e) {
         e.preventDefault();
+        // Login(username, password);
         setCheckSubmit(!checkSubmit);
         if(checkLogin === 'Valid'){
             localStorage.setItem('token','token item');
@@ -89,12 +108,10 @@ function Login() {
             setIsLogin(false);
         }
     }
-
     const token = localStorage.getItem("token");
     if(token != null){
         return <Redirect to="/mainpage/polls"/>
     }
-
     return (
         <div className="container">
         <div>
